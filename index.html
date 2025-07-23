@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stopwatch Timer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #d1eaff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .showData {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      margin: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .createElemetAdd {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .createElemetAdd p {
+      margin: 0.3rem 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <p class="showData">0</p>
+    <p class="today-Date"></p>
+    <button class="start-btn">Start</button>
+    <button class="stop-btn">Stop</button>
+    <button class="reset-btn">Reset</button>
+    <button class="getTime-btn">Get Time</button>
+    <button class="clear-btn">Clear Time</button>
+    <button class="get-Time">Time</button>
+    <button class="get-Date">Date</button>
+
+  </div>
+  <div class="createElemetAdd"></div>
+
+  <script>
+    const startBtn = document.querySelector(".start-btn");
+    const stopBtn = document.querySelector(".stop-btn");
+    const resetBtn = document.querySelector(".reset-btn");
+    const getTimeBtn = document.querySelector(".getTime-btn");
+    const clearBtn = document.querySelector(".clear-btn");
+    const curTime = document.querySelector(".get-Time");
+    const curDate = document.querySelector(".get-Date")
+
+    const showData = document.querySelector(".showData");
+    const getData = document.querySelector(".createElemetAdd");
+
+    let count = 0;
+    let intervalID;
+
+    startBtn.addEventListener('click', () => {
+      if (!intervalID) {
+        intervalID = setInterval(() => {
+          showData.innerHTML = count++;
+        }, 1000);
+      }
+    });
+
+    stopBtn.addEventListener('click', () => {
+      clearInterval(intervalID);
+    });
+
+    resetBtn.addEventListener('click', () => {
+
+      clearInterval(intervalID);
+      count = 0;
+      showData.innerHTML = count;
+    });
+
+    getTimeBtn.addEventListener('click', () => {
+      const timeElement = document.createElement("p");
+      timeElement.textContent = `Time captured: ${count} sec`;
+      getData.appendChild(timeElement);
+
+
+    });
+
+    clearBtn.addEventListener('click', () => {
+      getData.innerHTML = "";
+    });
+
+    let clearOut;
+
+    curTime.addEventListener('click', () => {
+      clearOut = setInterval(() => {
+        let curGetTime = new Date()
+        let getTiem = curGetTime.toLocaleTimeString()
+        showData.innerHTML = getTiem
+      }, 1000);
+    })
+
+    let today_date = document.querySelector(".today-Date")
+
+    curDate.addEventListener('click', () => {
+      setTimeout(() => {
+        clearInterval(clearOut)
+      })
+
+        let curDate = new Date()
+        let getDate1 = curDate.toLocaleDateString()
+        showData.innerHTML = getDate1
+
+        let todaydate = new Date()
+        let getDate = todaydate.toDateString()
+        today_date.innerHTML = getDate
+
+        
+
+    })
+
+  </script>
+</body>
+
+</html>
